@@ -24,4 +24,4 @@ yarn-error.log*
 /public
 
 /src/dao/resources/json
-/config/*.config.ts
+/config/mysql.config.ts
