@@ -13,7 +13,7 @@ class gradPhotoController {
         this.selectGradPhotoAll();
     }
     selectGradPhotoAll() {
-        router.get('/gradPhoto/selectGradPhotoAll', function (request, response, next) {
+        router.post('/gradPhoto/selectGradPhotoAll', function (request, response, next) {
             new gradPhotoDao().selectGradPhotoAll((res, fields) => {
                 let data={
                     code:200,

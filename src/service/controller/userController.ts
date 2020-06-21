@@ -1,10 +1,12 @@
 var express = require('express');
 var router = express.Router();
 import userDao from '../../dao/package/user/userDao';
+import Token from '../../common/main/Token/JwtToken'
 
 class userController {
     // userDao = new userDao();
-    routerPath: string = 'user/'
+    routerPath: string = '/account/'
+    
     constructor() {
         this.init();
     }
@@ -14,7 +16,7 @@ class userController {
         this.userLogin();
     }
     selectUserAll() {
-        router.get('/user/selectUserAll', function (request, response, next) {
+        router.get(this.routerPath+'selectUserAll', function (request, response, next) {
             new userDao().selectUserAll((res, fields) => {
                 let data={
                     code:200,
@@ -27,7 +29,8 @@ class userController {
     };
 
     userLogin(){
-        router.get('/user/userLogin', function (request, response, next) {
+        router.get(this.routerPath+'userLogin', function (request, response, next) {
+            var token=new Token().createToken("login",60 * 15)
             let r=response.req.query;
             let p:loginParam={
                 email:r.email,
@@ -38,9 +41,13 @@ class userController {
                 let a={
                     code:200,
                     message:"登陆成功！",
-                    data:[]
+                    data:{}
                 }
                 if(re.length===1){
+                    a.data={
+                        email:re[0].email,
+                        token:token
+                    }
                     response.send(a);
                 }else{
                     a.message="登陆失败！"
