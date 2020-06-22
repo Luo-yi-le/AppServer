@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 import gradPhotoDao from '../../dao/package/gradPhoto/gradPhotoDao';
+import ipTool from '../tools/ipTools';
 
 class gradPhotoController {
     // userDao = new userDao();
@@ -14,6 +15,11 @@ class gradPhotoController {
     }
     selectGradPhotoAll() {
         router.post('/gradPhoto/selectGradPhotoAll', function (request, response, next) {
+            let  r=response.req.body;
+            let options:OptionsInfo={
+                page:r.page,
+                message:r.msg
+            }
             new gradPhotoDao().selectGradPhotoAll((res, fields) => {
                 let data={
                     code:200,
@@ -27,6 +33,7 @@ class gradPhotoController {
                         } 
                     }
                 }
+                new ipTool(request,options)
                 response.send(data);
             })
         });

@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 import userDao from '../../dao/package/user/userDao';
 import Token from '../../common/main/Token/JwtToken'
+import ipTool from '../tools/ipTools';
 
 class userController {
     // userDao = new userDao();
@@ -17,12 +18,18 @@ class userController {
     }
     selectUserAll() {
         router.get(this.routerPath+'selectUserAll', function (request, response, next) {
+            let  r=response.req.query;
+            let options:OptionsInfo={
+                page:r.page,
+                message:r.msg
+            }
             new userDao().selectUserAll((res, fields) => {
                 let data={
                     code:200,
                     message:"sessuss",
                     data:res
                 }
+                new ipTool(request,options)
                 response.send(data);
             })
         });
@@ -36,7 +43,10 @@ class userController {
                 email:r.email,
                 ULoginPwd:r.pwd
             }
-            
+            let options:OptionsInfo={
+                page:r.page,
+                message:r.msg
+            }
             new userDao().userLogin(p,(re, fields) => {
                 let a={
                     code:200,
@@ -48,9 +58,13 @@ class userController {
                         email:re[0].email,
                         token:token
                     }
+                    options.message="登陆成功！"
+                    new ipTool(request,options)
                     response.send(a);
                 }else{
                     a.message="登陆失败！"
+                    options.message="登陆失败！"
+                    new ipTool(request,options)
                     response.send(a);
                 }
                 

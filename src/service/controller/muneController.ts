@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var https = require("https");
 import menuDao from '../../dao/package/menu/menuDao';
+import ipTool from '../tools/ipTools';
 
 //日志
 var log = require("../../../config/log4j/log4js");
@@ -18,6 +19,8 @@ class muneController {
     }
     selectGradPhotoAll() {
         router.get('/mune/selectMenuAll', function (request, response, next) {
+            let  r=response.req.query;
+            
             new menuDao().selectMenuAll((res, fields) => {
                 let data = {
                     code: 200,
@@ -25,7 +28,15 @@ class muneController {
                     reslut: true,
                     data: res
                 }
+                let options:OptionsInfo={
+                    page:r.page,
+                    message:r.msg
+                }
+                new ipTool(request,options)
+                // let logger = log.log.getLogger("[/mune/selectMenuAll]");
+                // logger.info('操作: ' +r.page);
                 response.send(data);
+                
             })
         });
     };
@@ -36,7 +47,7 @@ class muneController {
             var clientIp = __this.getIp(request);
            
             __this.getIpInfo(clientIp, function (err, msg) {
-               let logger = log.log.getLogger("[muneController]");
+               let logger = log.log.getLogger("[/ip]");
                 logger.info('ip地址: ' +msg.data[0].location);
                 response.send(msg)
 
