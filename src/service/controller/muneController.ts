@@ -3,10 +3,12 @@ var router = express.Router();
 var https = require("https");
 const util = require("util");
 import menuDao from '../../dao/package/menu/menuDao';
-
+//日志
+var log =require("../../../config/log4j/log4js");
 class muneController {
     // userDao = new userDao();
     routerPath: string = 'user/'
+    logger = log.log.getLogger("[muneController]");
     constructor() {
         this.init();
     }
@@ -35,6 +37,7 @@ class muneController {
             var clientIp = __this.getIp(request);
             __this.getIpInfo(clientIp, function (err, msg) {
                 console.log('地址: ' + util.inspect(msg.data[0].location, true, 8));
+                this.logger.info('ip地址 ' +"");
             });
         })
     }
