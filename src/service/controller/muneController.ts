@@ -1,15 +1,13 @@
 var express = require('express');
 var router = express.Router();
 var https = require("https");
-const util = require("util");
 import menuDao from '../../dao/package/menu/menuDao';
 
 //日志
-var log =require("../../../config/log4j/log4js");
+var log = require("../../../config/log4j/log4js");
 class muneController {
     // userDao = new userDao();
     routerPath: string = 'user/'
-    logger = log.log.getLogger("[muneController]");
     constructor() {
         this.init();
     }
@@ -32,32 +30,31 @@ class muneController {
         });
     };
 
-    getIpAddress(){
-        let __this=this;
-        router.get("/ip",function(request, response, next){
+    getIpAddress() {
+        let __this = this;
+        router.get("/ip", function (request, response, next) {
             var clientIp = __this.getIp(request);
-            console.log(clientIp)
+           
             __this.getIpInfo(clientIp, function (err, msg) {
-                let ip=util.inspect(msg.data[0].location, true, 8)
-                this.logger.info('ip地址: ' +ip);
-                response.send(ip)
-               
+               let logger = log.log.getLogger("[muneController]");
+                logger.info('ip地址: ' +msg.data[0].location);
+                response.send(msg)
+
             });
         })
     }
 
-    getIp(req:any) {
+    getIp(req: any) {
         var ip = req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddres || req.socket.remoteAddress || '';
         if (ip.split(',').length > 0) {
             ip = ip.split(',')[0];
         }
         return ip.match(/\d+\.\d+\.\d+\.\d+/)[0];
     }
-    getIpInfo(ip:string, cb:Function) {
+    getIpInfo(ip: string, cb: Function) {
         var url = "https://sp0.baidu.com/8aQDcjqpAAV3otqbppnN2DJv/api.php?query="
             + ip + "&co=&resource_id=6006&t=1555898284898&ie=utf8&oe=utf8&format=json&tn=baidu";
         https.get(url, function (res) {
-            console.log(res)
             var code = res.statusCode;
             if (code == 200) {
                 res.on('data', function (data) {
