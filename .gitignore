@@ -25,3 +25,4 @@ yarn-error.log*
 
 /src/dao/resources/json
 /config/mysql.config.ts
+/config/log4j/logs
