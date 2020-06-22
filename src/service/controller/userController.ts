@@ -15,6 +15,7 @@ class userController {
     init() {
         this.selectUserAll();
         this.userLogin();
+        this.userRules();
     }
     selectUserAll() {
         router.get(this.routerPath+'selectUserAll', function (request, response, next) {
@@ -70,6 +71,36 @@ class userController {
                 
             })
         }); 
+    }
+
+    //临时权限
+    userRules(){
+        router.get(this.routerPath+'rule', function (request, response, next) {
+            let r=response.req.query;
+
+            let a={
+                code:200,
+                message:"该账号可查看部分功能",
+                data:{
+                    rule:[
+                        {path:"page/alubm",result:true},
+                        {path:"message/index",result:true}
+                    ]
+                },
+                loginStatus:true,
+                result:true
+            }
+            if(r.token=="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtc2ciOiJsb2dpbiIsImlhdCI6MTU5MjczMjI5MywiZXhwIjoxNTkyNzMzMTkzfQ.SW6PHF3fsnZjqqo0S5HEA1x2MhMC_k4ft6ebDKa8Ugk"&& r.email=="2318927272@qq.com"){
+                response.send(a);
+            }else{
+                a.data={rule:[]};
+                a.message="无该账号";
+                a.loginStatus=false;
+                a.result=false;
+                response.send(a);
+            }
+
+        })
     }
 }
 new userController();
