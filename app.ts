@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 require("reflect-metadata")
+var bodyParser = require('body-parser');
 
 var indexRouter = require('./routes/index.ts');
 var usersRouter = require('./routes/users');

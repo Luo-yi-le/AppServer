@@ -1,4 +1,4 @@
-const recordConfig:recordConfig={
+const recordConfig:recordConfigInfo={
     host:'localhost',
     port: 3306,
     database:'record',
