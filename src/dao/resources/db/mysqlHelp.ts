@@ -63,7 +63,7 @@ class mysqlHelp {
         this.db.on("error", this.handleError);
         clearInterval(this.pingInterval);
         this.pingInterval = setInterval(() => {
-            console.log('ping...');
+            // console.log('ping...');
             this.db.ping((err) => {
                 if (err) {
                     console.log('ping error: ' + JSON.stringify(err));
