@@ -34,7 +34,9 @@ class muneController {
         router.get("/ip",function(request, response, next){
             var clientIp = __this.getIp(request);
             __this.getIpInfo(clientIp, function (err, msg) {
-                console.log('地址: ' + util.inspect(msg.data[0].location, true, 8));
+                let ip=util.inspect(msg.data[0].location, true, 8)
+                console.log('地址: ' + ip);
+                response.send(ip)
             });
         })
     }
