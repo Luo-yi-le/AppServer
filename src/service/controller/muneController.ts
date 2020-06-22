@@ -13,6 +13,7 @@ class muneController {
 
     init() {
         this.selectGradPhotoAll();
+        this.getIpAddress();
     }
     selectGradPhotoAll() {
         router.get('/mune/selectMenuAll', function (request, response, next) {
@@ -29,9 +30,10 @@ class muneController {
     };
 
     getIpAddress(){
+        let __this=this;
         router.get("/ip",function(request, response, next){
-            var clientIp = this.getIp(request);
-            this.getIpInfo(clientIp, function (err, msg) {
+            var clientIp = __this.getIp(request);
+            __this.getIpInfo(clientIp, function (err, msg) {
                 console.log('Address: ' + util.inspect(msg.data[0].location, true, 8));
             });
         })
