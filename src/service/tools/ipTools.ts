@@ -11,7 +11,7 @@ class ipTools {
         var clientIp = __this.getIp(request);
         __this.getIpInfo(clientIp, function (err, msg) {
             let logger = log.log.getLogger("["+options.page+"]");
-            logger.info('访问路径: '+options.message+'  访问ip: ' + msg.data[0].location);
+            logger.info('访问路径: '+options.message+', 访问ip: ' + clientIp+'/'+msg.data[0].location);
         });
 
     };

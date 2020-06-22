@@ -7,7 +7,7 @@ const recordConfig:recordConfigInfo={
     charset:"UTF8_GENERAL_CI"
 };
 
-interface recordConfig{
+interface recordConfigInfo{
     host:string,
     port: number,
     database:string,
