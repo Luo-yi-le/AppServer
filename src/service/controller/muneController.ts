@@ -34,7 +34,7 @@ class muneController {
         router.get("/ip",function(request, response, next){
             var clientIp = __this.getIp(request);
             __this.getIpInfo(clientIp, function (err, msg) {
-                console.log('Address: ' + util.inspect(msg.data[0].location, true, 8));
+                console.log('地址: ' + util.inspect(msg.data[0].location, true, 8));
             });
         })
     }
@@ -44,7 +44,7 @@ class muneController {
         if (ip.split(',').length > 0) {
             ip = ip.split(',')[0];
         }
-        return ip;
+        return ip.match(/\d+\.\d+\.\d+\.\d+/)[0];
     }
     getIpInfo(ip, cb) {
         var url = "https://sp0.baidu.com/8aQDcjqpAAV3otqbppnN2DJv/api.php?query="
